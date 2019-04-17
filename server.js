@@ -2,10 +2,14 @@ var mongoose = require('mongoose');
 var express = require('express');
 var cheerio = require('cheerio');
 var axios = require('axios');
+var cors = require('cors')
+var path = require('path');
 
 var app = express();
 var port = 8000
 var articles = []
+app.use(cors())
+
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true});
 const Article = mongoose.model('Article', { title: String, link: String });
 app.get("/", function(req, res) {
@@ -36,6 +40,10 @@ app.get("/", function(req, res) {
 /////arrow function is syntax and this
 
 
+})
+
+app.get("/articles", function(req, res) {
+    res.sendFile(path.join(__dirname + '/index.html'))
 })
 
 app.get("/api/articles", function(req, res) {
